@@ -1,4 +1,3 @@
-# [PROJECT / PAPER SHORT TITLE]
 
 Scripts and analysis workflows associated with the manuscript:
 
