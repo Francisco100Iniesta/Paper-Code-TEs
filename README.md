@@ -2,9 +2,10 @@
 
 Scripts and analysis workflows associated with the manuscript:
 
-**"[FULL MANUSCRIPT TITLE]"**
+**"[Transposable element insertions and associated methylation patterns in nearly isogenic human genomes revealed by long-read sequencing]"**
 
 Authors: 
+
 Francisco Iniesta-Martinez1,†, María Llamas-López1,†, Esther Navarro-Manzano1-3, Alba Rodríguez-Ródenas3 , José Padilla1, Marina Fuentes-Custodio1, Francisco Abad-Navarro2-3, Javier Cuenca-Guardiola2, Carlos Bravo-Pérez1, Bruno Ramos-Molina4, Lidia Sánchez-Alcoholado4 , Benedicte Stavik6-7, Gareth J Sullivan8 Per Morten Sandset6-7, María Eugenia Chollet6, María Eugenia de la Morena-Barrio1, María Luisa Lozano1, Jesualdo Tomás Fernández-Breis1-2,Guiomar Perez-de Nanclares5,  Javier Corral1, Belén de la Morena-Barrio1   
 1 Department of Haematology, Hospital Universitario Morales Meseguer, Centro Regional de Hemodonación, University of Murcia, IMIB Pascual Parrilla, CIBERER-ISCIII, 30003, Murcia, Spain
 2 Department of Informatics and Systems, University of Murcia, CEIR Campus Mare Nostrum, IMIB-Arrixaca, Faculty of Computer Science, Murcia, Spain.
