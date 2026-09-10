@@ -31,7 +31,7 @@ The analyses include:
 - variant analysis
 - genomic and epigenomic summary statistics
 - statistical analyses
-- generation of manuscript figures and tables
+- Haplotype-Aware Methylation Analisys
 
 This repository contains analysis code only. Individual-level human genomic
 data are not distributed through GitHub.
@@ -72,7 +72,7 @@ in this repository.
 │   ├── 02_methylation/
 │   ├── 03_variants/
 │   ├── 04_statistics/
-│   └── 05_figures/
+│  
 │
 ├── workflow/
 │   └── [Snakefile / main.nf]
