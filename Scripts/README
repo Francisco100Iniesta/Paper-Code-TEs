@@ -1,15 +1,19 @@
-01_internal_TE_methylation.sh
+# Scripts
 
-methylation INSIDE the non-reference TE using a custom reference
+This directory contains the main scripts used for preprocessing, methylation analysis, and sequencing quality-control in the study.
 
+## Structure
 
-
-02_regional_methylation.sh
-
-Calculates DNA methylation across user-defined genomic regions using Modkit.
-In this study, the regions corresponded to 500-bp windows flanking
-RetroInspector-defined TE insertion breakpoints.
-
-The script is run on haplotagged BAM files with Modkit --phased,
-producing both haplotype-resolved methylation profiles (HP1/HP2)
-and the combined regional methylation profile.
+```text
+Scripts/
+├── Analysis/
+│   └── Downstream processing and statistical comparison of methylation results.
+│
+├── Methylation/
+│   └── Internal TE methylation and regional/flanking methylation workflows.
+│
+├── Preprocessing/
+│   └── Preparation of RetroInspector-derived insertion inputs and genomic flanking regions.
+│
+└── Quality_Control/
+    └── Auxiliary scripts for summarizing sequencing and alignment quality-control metrics.
