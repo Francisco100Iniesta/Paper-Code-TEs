@@ -1,4 +1,3 @@
-
 Quality-control summary scripts
 
 This directory contains auxiliary code used to summarize sequencing and alignment quality-control metrics for the study.
@@ -72,18 +71,3 @@ dplyr
 The exact software environment used for the analyses should be documented at the repository level, for example in:
 
 environment.yml
-
-Repository organization
-
-A suggested location for this script is:
-
-scripts/
-├── methylation/
-│   ├── 01_internal_TE_methylation.sh
-│   └── 02_regional_methylation.sh
-│
-└── quality_control/
-    ├── README.md
-    └── summarize_qc_metrics.R
-
-This separation keeps the main methylation analysis distinct from the auxiliary sequencing quality-control code.
