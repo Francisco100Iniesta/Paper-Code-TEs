@@ -57,28 +57,3 @@ Data Access Committee (DAC).
 No personally identifiable or individual-level genomic data are included
 in this repository.
 
-## Repository structure
-
-```text
-.
-├── README.md
-├── LICENSE
-├── environment.yml
-├── config/
-│   └── config.yaml
-│
-├── scripts/
-│   ├── 01_preprocessing/
-│   ├── 02_methylation/
-│   ├── 03_variants/
-│   ├── 04_statistics/
-│  
-│
-├── workflow/
-│   └── [Snakefile / main.nf]
-│
-├── metadata/
-│   └── example_metadata.tsv
-│
-└── results/
-    └── README.md
