@@ -1,1 +1,89 @@
 
+Quality-control summary scripts
+
+This directory contains auxiliary code used to summarize sequencing and alignment quality-control metrics for the study.
+
+Corresponding part of the manuscript
+
+These scripts belong to the sequencing quality-control analysis, not to the DNA methylation workflow.
+
+In the manuscript, they correspond to the Methods subsection:
+
+Quality analysis of the sequencing samples
+
+The study assessed sequencing and alignment quality using tools including NanoPlot, SAMtools stats, and Mosdepth. The script in this directory does not run those programs directly. Instead, it extracts selected metrics from QC files that have already been generated and combines them into a compact summary table used for downstream reporting.
+
+Script
+
+summarize_qc_metrics.R
+
+This script combines selected values from two precomputed QC files.
+
+It expects:
+
+Rscript summarize_qc_metrics.R PATH1 PATH2 OUTPUT_DIR
+
+Input 1: PATH1
+
+A whitespace-delimited QC summary file from which the script extracts the global average coverage.
+
+The script:
+
+removes rows whose first column ends with _region;
+
+selects the row containing total in column V1;
+
+retrieves the value stored in column V4;
+
+reports this value as:
+
+Average_cover
+
+The exact upstream filename may differ between analyses. In the original workflow, this input was used to retrieve the global coverage metric.
+
+Input 2: PATH2
+
+A tab-delimited QC statistics file without a header.
+
+The script retains rows containing average in column V2, removes columns V1 and V4, and combines the retained metrics with the global average coverage extracted from PATH1.
+
+Output
+
+The script generates:
+
+stats_summary.tsv
+
+inside the specified output directory.
+
+This file contains the selected average QC metrics together with the global average coverage value.
+
+Example
+
+Rscript summarize_qc_metrics.R \
+    sample.mosdepth.summary.txt \
+    stats.txt \
+    qc_summary/
+
+Requirements
+
+R
+dplyr
+
+The exact software environment used for the analyses should be documented at the repository level, for example in:
+
+environment.yml
+
+Repository organization
+
+A suggested location for this script is:
+
+scripts/
+├── methylation/
+│   ├── 01_internal_TE_methylation.sh
+│   └── 02_regional_methylation.sh
+│
+└── quality_control/
+    ├── README.md
+    └── summarize_qc_metrics.R
+
+This separation keeps the main methylation analysis distinct from the auxiliary sequencing quality-control code.
