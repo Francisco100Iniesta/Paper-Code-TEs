@@ -1,1 +1,195 @@
+Methylation preprocessing
 
+This directory contains preprocessing scripts used to prepare transposable element (TE) insertion coordinates and sequences for the downstream methylation workflows.
+
+These scripts do not calculate methylation directly. They convert RetroInspector-derived insertion information into the input formats required by the internal and regional methylation analyses.
+
+Workflow overview
+
+RetroInspector outputs
+        |
+        +--> insertion ID
+        +--> chromosome
+        +--> insertion breakpoint
+        +--> inserted sequence (vcf_alt)
+        |
+        v
+prepare_internal_TE_input.R
+        |
+        +--> internal_TE_input.tsv
+        |       |
+        |       +--> 01_internal_TE_methylation.sh
+        |
+        v
+prepare_flanking_regions.R
+        |
+        +--> left.bed
+        +--> right.bed
+        +--> flanking_regions_map.tsv
+                |
+                +--> 02_regional_methylation.sh
+
+prepare_internal_TE_input.R
+
+Purpose
+
+Prepares the four-column input table required for internal methylation profiling of non-reference TE insertions.
+
+The script combines:
+
+a table containing TE insertion loci and RetroInspector sequence identifiers; and
+
+a RetroInspector insertion table containing the inserted sequence (vcf_alt).
+
+The resulting file contains:
+
+TE_ID    chromosome    insertion_position    insertion_sequence
+
+The output is written without a header because it is consumed directly by 01_internal_TE_methylation.sh.
+
+Usage
+
+Rscript prepare_internal_TE_input.R \
+    candidate_insertions.csv \
+    retroinspector_insertions.rds \
+    internal_TE_input.tsv
+
+Required RetroInspector columns
+
+The RetroInspector insertion table must contain:
+
+seqId
+vcf_alt
+
+Supported formats are:
+
+.rds
+.tsv
+.txt
+.csv
+
+Output
+
+internal_TE_input.tsv
+
+Example structure:
+
+TE001    chr1    123456789    ACGTACGT...
+TE002    chr8    87654321     GCTAGCTA...
+
+The inserted sequence is subsequently incorporated into an insertion-specific custom reference by 01_internal_TE_methylation.sh.
+
+prepare_flanking_regions.R
+
+Purpose
+
+Generates genomic windows surrounding RetroInspector-defined TE insertion breakpoints for regional methylation analysis.
+
+For the analyses reported in the paper, 500-bp windows were generated immediately upstream and downstream of each insertion breakpoint.
+
+The script produces BED-compatible regions that can be passed directly to 02_regional_methylation.sh.
+
+Usage
+
+Rscript prepare_flanking_regions.R \
+    internal_TE_input.tsv \
+    flanking_regions/ \
+    500 \
+    one_based
+
+Arguments:
+
+1. Input TE table
+2. Output directory
+3. Window size in bp
+4. Coordinate mode: bed0 or one_based
+
+Coordinate conventions
+
+The coordinate convention must be specified explicitly.
+
+Use:
+
+one_based
+
+when the insertion position is a 1-based genomic coordinate.
+
+Use:
+
+bed0
+
+when the insertion position is already a 0-based BED-style breakpoint.
+
+The output BED files always use standard 0-based, half-open BED coordinates.
+
+For a BED breakpoint p and a window size w:
+
+LEFT  = [p - w, p)
+RIGHT = [p, p + w)
+
+Coordinates extending below zero are truncated at chromosome position 0.
+
+Outputs
+
+left.bed
+right.bed
+flanking_regions_map.tsv
+
+left.bed and right.bed contain the regions used by Modkit.
+
+flanking_regions_map.tsv preserves the relationship between the original insertion coordinate and the generated BED windows, making coordinate transformations explicit and traceable.
+
+Relationship to the methylation workflow
+
+The preprocessing scripts feed the two main methylation workflows:
+
+Internal TE methylation
+
+prepare_internal_TE_input.R
+        |
+        v
+01_internal_TE_methylation.sh
+
+This workflow constructs insertion-specific custom references, realigns nanopore reads, and measures methylation within the inserted TE sequence.
+
+Regional methylation
+
+prepare_internal_TE_input.R
+        |
+        v
+prepare_flanking_regions.R
+        |
+        v
+02_regional_methylation.sh
+
+This workflow calculates methylation in genomic regions flanking the insertion breakpoint. In the paper, 500-bp left and right windows were used.
+
+When 02_regional_methylation.sh is run with Modkit in phased mode, its output can subsequently be used for both combined regional methylation and haplotype-resolved analyses.
+
+Requirements
+
+R
+dplyr
+readr
+stringr
+
+The exact software environment used for the study should be documented at the repository root, for example with:
+
+environment.yml
+
+Suggested repository location
+
+scripts/
+└── methylation/
+    ├── preprocessing/
+    │   ├── README.md
+    │   ├── prepare_internal_TE_input.R
+    │   └── prepare_flanking_regions.R
+    │
+    ├── 01_internal_TE_methylation.sh
+    ├── 02_regional_methylation.sh
+    │
+    └── analysis/
+        └── pairwise_methylation_statistics.R
+
+The analysis/ directory should contain downstream filtering, pairwise methylation comparisons, descriptive statistics, and result-table generation, while preprocessing/ is restricted to preparing coordinates, sequences, and BED regions.
