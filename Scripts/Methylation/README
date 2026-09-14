@@ -1,1 +1,16 @@
 
+01_internal_TE_methylation.sh
+
+methylation INSIDE the non-reference TE using a custom reference
+
+
+
+02_regional_methylation.sh
+
+Calculates DNA methylation across user-defined genomic regions using Modkit.
+In this study, the regions corresponded to 500-bp windows flanking
+RetroInspector-defined TE insertion breakpoints.
+
+The script is run on haplotagged BAM files with Modkit --phased,
+producing both haplotype-resolved methylation profiles (HP1/HP2)
+and the combined regional methylation profile.
