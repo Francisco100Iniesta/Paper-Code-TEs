@@ -26,9 +26,7 @@ generate the analyses presented in the manuscript.
 
 The analyses include:
 
-- whole-genome sequence processing
 - DNA methylation analysis
-- variant analysis
 - genomic and epigenomic summary statistics
 - statistical analyses
 - Haplotype-Aware Methylation Analisys
